@@ -1,6 +1,6 @@
-import CategoryList from '../../components/CategoryList/CategoryList';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
+import CategoryList from '../../components/CategoryList/CategoryList';
 
 function Home() {
   return (
