@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
+import CategoryList from '../../components/CategoryList/CategoryList';
 
 function Home() {
   return (
@@ -12,6 +13,7 @@ function Home() {
         />
       </div>
       <div>
+        <CategoryList />
         <h2 data-testid="home-initial-message">
           Digite algum termo de pesquisa ou escolha uma categoria.
         </h2>
