@@ -1,4 +1,6 @@
 import CategoryList from '../../components/CategoryList/CategoryList';
+import { Link } from 'react-router-dom';
+import { FiShoppingCart } from 'react-icons/fi';
 
 function Home() {
   return (
@@ -10,10 +12,16 @@ function Home() {
           id=""
         />
       </div>
-      <CategoryList />
-      <h2 data-testid="home-initial-message">
-        Digite algum termo de pesquisa ou escolha uma categoria.
-      </h2>
+      <div>
+        <CategoryList />
+        <h2 data-testid="home-initial-message">
+          Digite algum termo de pesquisa ou escolha uma categoria.
+        </h2>
+        {/* Botão para o carrinho de compras */}
+        <Link to="/shoppingCart" data-testid="shopping-cart-button">
+          <FiShoppingCart />
+        </Link>
+      </div>
     </>
   );
 }
