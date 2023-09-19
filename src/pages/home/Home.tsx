@@ -1,3 +1,5 @@
+import CategoryList from '../../components/CategoryList/CategoryList';
+
 function Home() {
   return (
     <>
@@ -8,6 +10,7 @@ function Home() {
           id=""
         />
       </div>
+      <CategoryList />
       <h2 data-testid="home-initial-message">
         Digite algum termo de pesquisa ou escolha uma categoria.
       </h2>
