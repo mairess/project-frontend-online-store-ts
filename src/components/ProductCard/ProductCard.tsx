@@ -10,6 +10,7 @@ function ProductCard({ product } : ProductCardProps) {
       <li>
         {' '}
         <img src={ product.thumbnail } alt="imagem do produto" />
+        <p>{ product.title }</p>
         <p>
           Preço R$:
           {' '}

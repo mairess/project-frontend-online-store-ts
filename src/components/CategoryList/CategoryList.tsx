@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getCategories } from '../../services/api';
+import { CategoryType } from '../../types';
 
-type CategoryType = {
-  id: string,
-  name: string,
-  selected: boolean,
+type CategoryListProps = {
+  categoryList: CategoryType[];
+  onCategoryListChange: (updatedCategoriesList: CategoryType[]) => void;
 };
 
-function CategoryList() {
-  const [categoriesList, setCategoriesList] = useState<CategoryType[]>([]);
+function CategoryList({ categoryList, onCategoryListChange }: CategoryListProps) {
+  // const [categoriesList, setCategoriesList] = useState<CategoryType[]>([]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       const categoriesData = await getCategories();
-      console.log(categoriesData);
       if (Array.isArray(categoriesData)) {
         const categoriesDataWithSelection = categoriesData
           .map((category: CategoryType) => (
@@ -22,25 +21,31 @@ function CategoryList() {
               selected: false,
             }
           ));
-        setCategoriesList(categoriesDataWithSelection);
+        onCategoryListChange(categoriesDataWithSelection);
       } else {
         console.error('categoriesData is not an array');
       }
     };
     fetchCategories();
   }, []);
-  function handleChange(index: number) {
-    const updatedCategories = [...categoriesList];
-    updatedCategories[index].selected = !updatedCategories[index].selected;
-    setCategoriesList(updatedCategories);
-  }
 
-  console.log(categoriesList);
+  function handleChange(index: number) {
+    const updatedCategories = categoryList.map((category, idx) => (
+      {
+        ...category,
+        selected: idx === index,
+      }
+    ));
+    // alteração efetuada para somente um único item da lista seja true e esteja marcado na lista
+    // const updatedCategories = [...categoriesList];
+    // updatedCategories[index].selected = !updatedCategories[index].selected;
+    onCategoryListChange(updatedCategories);
+  }
 
   return (
     <aside>
       <ul>
-        {categoriesList.map((category, index) => (
+        {categoryList.map((category, index) => (
           <li key={ category.id }>
             <label htmlFor={ category.id } data-testid="category">
               <input
