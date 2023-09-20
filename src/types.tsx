@@ -4,3 +4,9 @@ export type TypeProduct = {
   thumbnail: string,
   price: number,
 };
+
+export type CategoryType = {
+  id: string,
+  name: string,
+  selected: boolean,
+};

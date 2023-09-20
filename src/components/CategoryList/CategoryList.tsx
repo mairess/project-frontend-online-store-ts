@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getCategories } from '../../services/api';
-
-type CategoryType = {
-  id: string,
-  name: string,
-  selected: boolean,
-};
+import { CategoryType } from '../../types';
 
 function CategoryList() {
   const [categoriesList, setCategoriesList] = useState<CategoryType[]>([]);

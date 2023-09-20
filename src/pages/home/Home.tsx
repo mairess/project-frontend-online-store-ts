@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
+import { useState } from 'react';
 import CategoryList from '../../components/CategoryList/CategoryList';
 import SearchProduct from '../../components/SearchProduct/SearchProduct';
 
 function Home() {
+  const [categoriesList, setCategoriesList] = useState();
   return (
     <>
       <div>
