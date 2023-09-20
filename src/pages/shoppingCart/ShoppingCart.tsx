@@ -34,9 +34,11 @@ function ShoppingCart() {
       <Link to="/">
         <BiArrowBack />
       </Link>
-      <h2 data-testid="shopping-cart-empty-message">
-        Seu carrinho está vazio
-      </h2>
+      {(uniqueProducts.length === 0) && (
+        <h2 data-testid="shopping-cart-empty-message">
+          Seu carrinho está vazio
+        </h2>
+      )}
       {uniqueProducts.map((item) => (
         <ProductsWrapper key={ item.id }>
           <button>Remover</button>
