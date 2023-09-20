@@ -11,19 +11,24 @@ function CategoryList() {
   const [categoriesList, setCategoriesList] = useState<CategoryType[]>([]);
 
   useEffect(() => {
-    async function fetchCategories() {
+    const fetchCategories = async () => {
       const categoriesData = await getCategories();
-      const categoriesDataWithSelection = categoriesData.map((category: CategoryType) => (
-        {
-          ...category,
-          selected: false,
-        }
-      ));
-      setCategoriesList(categoriesDataWithSelection);
-    }
+      console.log(categoriesData);
+      if (Array.isArray(categoriesData)) {
+        const categoriesDataWithSelection = categoriesData
+          .map((category: CategoryType) => (
+            {
+              ...category,
+              selected: false,
+            }
+          ));
+        setCategoriesList(categoriesDataWithSelection);
+      } else {
+        console.error('categoriesData is not an array');
+      }
+    };
     fetchCategories();
   }, []);
-
   function handleChange(index: number) {
     const updatedCategories = [...categoriesList];
     updatedCategories[index].selected = !updatedCategories[index].selected;
