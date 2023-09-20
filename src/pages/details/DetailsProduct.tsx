@@ -5,53 +5,50 @@ import { TypeProduct2 } from '../../types';
 import { getProductById } from '../../services/api';
 
 function DetailsProduct() {
-  // Estado criado para armazenar os dados da API
-  const [showDetails, setShowDetais] = useState<TypeProduct2[]>([]);
+  const [showDetails, setShowDetails] = useState<TypeProduct2>();
 
   const { id } = useParams();
   const safeId = id ?? '';
 
+  async function fetchApi() {
+    const detailsProduct = await getProductById(safeId);
+    setShowDetails(await detailsProduct);
+  }
+
   useEffect(() => {
-    const getDetails = async () => {
-      const detailsProduct = await getProductById(safeId);
-      setShowDetais(detailsProduct);
-    };
-    getDetails();
-  });
+    fetchApi();
+  }, []);
 
   return (
     <div>
-      <Link to="/shoppingCart">
+      <Link to="/shoppingCart" data-testid="shopping-cart-button">
         <button>
           <FiShoppingCart />
         </button>
       </Link>
-      {showDetails.map((details) => (
-        <div key={ details.id }>
-          <div>
-            <h3 data-testid="product-detail-name">{ details.title }</h3>
-            <p data-testid="product-detail-price">{details.price}</p>
-            <img
-              src={ details.thumbnail }
-              alt={ `Imagem do produto ${details.title}` }
-              data-testid="product-detail-image"
-            />
-          </div>
-          <div>
-            <p>Especificações Técnicas</p>
-            <ul>
-              {details.attributes.map((attribute) => (
-                <li
-                  key={ attribute.name }
-                >
-                  {`${attribute.name}: ${attribute.value_name}`}
-                </li>
-              ))}
-            </ul>
-          </div>
+      <div>
+        <div>
+          <h3 data-testid="product-detail-name">{ showDetails?.title }</h3>
+          <p data-testid="product-detail-price">{`R$ ${showDetails?.price},00`}</p>
+          <img
+            src={ showDetails?.thumbnail }
+            alt={ `Imagem do produto ${showDetails?.title}` }
+            data-testid="product-detail-image"
+          />
         </div>
-      ))}
-
+        <div>
+          <p>Especificações Técnicas</p>
+          <ul>
+            {showDetails?.attributes.map((attribute) => (
+              <li
+                key={ attribute.name }
+              >
+                {`${attribute.name}: ${attribute.value_name}`}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
