@@ -25,3 +25,7 @@ type Attribute = {
   value_id: string,
   value_name: string,
 };
+
+export type TypeProductInCart = TypeProduct & {
+  quantity: number;
+};
