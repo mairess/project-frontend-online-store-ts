@@ -3,9 +3,15 @@ import { FiShoppingCart } from 'react-icons/fi';
 import { useState } from 'react';
 import CategoryList from '../../components/CategoryList/CategoryList';
 import SearchProduct from '../../components/SearchProduct/SearchProduct';
+import { CategoryType } from '../../types';
 
 function Home() {
-  const [categoriesList, setCategoriesList] = useState();
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
+
+  const handleCategoryListChange = (updatedCategoriesList: CategoryType[]) => {
+    setCategoryList(updatedCategoriesList);
+  };
+
   return (
     <>
       <div>
@@ -21,7 +27,10 @@ function Home() {
           <FiShoppingCart />
         </Link>
       </div>
-      <CategoryList />
+      <CategoryList
+        categoryList={ categoryList }
+        onCategoryListChange={ handleCategoryListChange }
+      />
     </>
   );
 }
