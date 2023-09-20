@@ -30,12 +30,17 @@ function CategoryList() {
     fetchCategories();
   }, []);
   function handleChange(index: number) {
-    const updatedCategories = [...categoriesList];
-    updatedCategories[index].selected = !updatedCategories[index].selected;
+    const updatedCategories = categoriesList.map((category, idx) => (
+      {
+        ...category,
+        selected: idx === index,
+      }
+    ));
+    // alteração efetuada para somente um único item da lista seja true e esteja marcado na lista
+    // const updatedCategories = [...categoriesList];
+    // updatedCategories[index].selected = !updatedCategories[index].selected;
     setCategoriesList(updatedCategories);
   }
-
-  console.log(categoriesList);
 
   return (
     <aside>
