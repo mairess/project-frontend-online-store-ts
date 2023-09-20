@@ -15,7 +15,6 @@ function SearchProduct({ categoryList }: SearchProductProps) {
   useEffect(() => {
     const selectedCategory = categoryList
       .find((category) => category.selected === true);
-    console.log(selectedCategory);
     if (selectedCategory?.selected === true) {
       searchProduct(selectedCategory.id);
     }
