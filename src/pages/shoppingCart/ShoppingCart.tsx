@@ -21,8 +21,7 @@ function ShoppingCart() {
           return index === self.findIndex((procutsFind) => procutsFind.id === product.id);
         },
       );
-    setUniqueProducts(products);
-    console.log(storage);
+    setUniqueProducts(products || []);
     const myQuantities : { [productId: string]: number } = {};
     storage.forEach((product: TypeProductInCart) => {
       if (!myQuantities[product.id]) {
@@ -31,36 +30,33 @@ function ShoppingCart() {
         myQuantities[product.id]++;
       }
     });
+
     setProductQuantities(myQuantities);
+    localStorage.setItem('cart', JSON.stringify(storage));
   }, [storage]);
 
-  // quando o product for alterado para mais ou menos o productQuantities precisa recalcular
-
-  // se clicar adicionar vou add o item no storage
   const increseItem = (item : TypeProductInCart) => {
     const increseItens = [...storage];
     increseItens.push(item);
-    localStorage.setItem('cart', JSON.stringify(increseItens));
     setStorage(increseItens);
   };
 
-  // se clicar em remover remove um item no storage
   const decreaseItem = (item: TypeProductInCart) => {
-    const decreaseStorage = [...storage];
-    const indexItem = decreaseStorage.indexOf(item);
-    decreaseStorage.splice(indexItem, 1);
-    setStorage(decreaseStorage);
+    const decreaseStorage : any = [...storage];
+    const resultItens = storage.filter((element) => element.id === item.id);
+    if (resultItens.length > 1) {
+      const indexItem = decreaseStorage.lastIndexOf(item);
+      decreaseStorage.splice(indexItem, 1);
+      setStorage(decreaseStorage);
+    }
   };
 
-  // se clicar remove todo o item
   const removerItem = (item: TypeProductInCart) => {
     const itemRemove = storage.filter((element) => element.id !== item.id);
     setStorage(itemRemove);
-    localStorage.setItem('cart', JSON.stringify(storage));
   };
   return (
     <div>
-      {/* link que retonar para a home */}
       <Link to="/">
         <BiArrowBack />
       </Link>
@@ -71,16 +67,31 @@ function ShoppingCart() {
       )}
       {uniqueProducts.map((item) => (
         <ProductsWrapper key={ item.id }>
-          <button onClick={ () => removerItem(item) }>Remover</button>
+          <button
+            onClick={ () => removerItem(item) }
+            data-testid="remove-product"
+          >
+            Remover
+          </button>
           <div><img src={ item.thumbnail } alt={ item.title } /></div>
           <div data-testid="shopping-cart-product-name">
             {item.title}
           </div>
-          <button onClick={ () => increseItem(item) }>+</button>
+          <button
+            onClick={ () => increseItem(item) }
+            data-testid="product-increase-quantity"
+          >
+            +
+          </button>
           <div data-testid="shopping-cart-product-quantity">
             {productQuantities[item.id]}
           </div>
-          <button onClick={ () => decreaseItem(item) }>-</button>
+          <button
+            onClick={ () => decreaseItem(item) }
+            data-testid="product-decrease-quantity"
+          >
+            -
+          </button>
         </ProductsWrapper>
       ))}
     </div>
