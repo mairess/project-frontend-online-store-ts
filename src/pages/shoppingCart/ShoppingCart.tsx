@@ -1,36 +1,62 @@
 import { Link } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
+import { useEffect, useState } from 'react';
 import { TypeProductInCart } from '../../types';
 import { ProductsWrapper } from './styles';
 
 function ShoppingCart() {
-  const storage: TypeProductInCart[] = JSON.parse(localStorage.getItem('cart') || '[]');
+  const [storage, setStorage] = useState<TypeProductInCart[]>([]);
+  const [uniqueProducts, setUniqueProducts] = useState<TypeProductInCart[]>([]);
+  const [productQuantities, setProductQuantities] = useState<
+  { [productId: string]: number }>({});
 
-  const productQuantity = (productId: string) => {
-    return storage
-      .filter((product: TypeProductInCart) => product.id === productId).length;
+  useEffect(() => {
+    setStorage(JSON.parse(localStorage.getItem('cart') || '[]'));
+  }, []);
+
+  useEffect(() => {
+    const products = storage
+      .filter(
+        (product: TypeProductInCart, index: number, self: TypeProductInCart[]) => {
+          return index === self.findIndex((procutsFind) => procutsFind.id === product.id);
+        },
+      );
+    setUniqueProducts(products || []);
+    const myQuantities : { [productId: string]: number } = {};
+    storage.forEach((product: TypeProductInCart) => {
+      if (!myQuantities[product.id]) {
+        myQuantities[product.id] = 1;
+      } else {
+        myQuantities[product.id]++;
+      }
+    });
+
+    setProductQuantities(myQuantities);
+    localStorage.setItem('cart', JSON.stringify(storage));
+  }, [storage]);
+
+  const increseItem = (item : TypeProductInCart) => {
+    const increseItens = [...storage];
+    increseItens.push(item);
+    setStorage(increseItens);
   };
 
-  const productQuantities: { [productId: string]: number } = {};
-
-  storage.forEach((product: TypeProductInCart) => {
-    if (!productQuantities[product.id]) {
-      productQuantities[product.id] = 1;
-    } else {
-      productQuantities[product.id]++;
+  const decreaseItem = (item: TypeProductInCart) => {
+    const decreaseStorage : any = [...storage];
+    const resultItens = storage.filter((element) => element.id === item.id);
+    if (resultItens.length > 1) {
+      const indexItem = decreaseStorage.lastIndexOf(item);
+      decreaseStorage.splice(indexItem, 1);
+      setStorage(decreaseStorage);
     }
-  });
+  };
 
-  const uniqueProducts = storage
-    .filter(
-      (product: TypeProductInCart, index: number, self: TypeProductInCart[]) => {
-        return index === self.findIndex((procutsFind) => procutsFind.id === product.id);
-      },
-    );
-
+  const removerItem = (item: TypeProductInCart) => {
+    const itemRemove = storage.filter((element) => element.id !== item.id);
+    setStorage(itemRemove);
+  };
   return (
     <div>
-      {/* link que retonar para a home */}
       <Link to="/">
         <BiArrowBack />
       </Link>
@@ -41,16 +67,31 @@ function ShoppingCart() {
       )}
       {uniqueProducts.map((item) => (
         <ProductsWrapper key={ item.id }>
-          <button>Remover</button>
+          <button
+            onClick={ () => removerItem(item) }
+            data-testid="remove-product"
+          >
+            Remover
+          </button>
           <div><img src={ item.thumbnail } alt={ item.title } /></div>
           <div data-testid="shopping-cart-product-name">
             {item.title}
           </div>
-          <button>+</button>
+          <button
+            onClick={ () => increseItem(item) }
+            data-testid="product-increase-quantity"
+          >
+            +
+          </button>
           <div data-testid="shopping-cart-product-quantity">
-            {productQuantity(item.id)}
+            {productQuantities[item.id]}
           </div>
-          <button>-</button>
+          <button
+            onClick={ () => decreaseItem(item) }
+            data-testid="product-decrease-quantity"
+          >
+            -
+          </button>
         </ProductsWrapper>
       ))}
     </div>
