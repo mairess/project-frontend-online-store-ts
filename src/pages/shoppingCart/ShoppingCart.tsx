@@ -94,6 +94,15 @@ function ShoppingCart() {
           </button>
         </ProductsWrapper>
       ))}
+      <Link to="/checkout">
+        <button
+          disabled={ uniqueProducts.length <= 0 }
+          data-testid="checkout-products"
+        >
+          Finalizar Compra
+        </button>
+
+      </Link>
     </div>
   );
 }
