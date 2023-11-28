@@ -1,10 +1,12 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# <p align="center">Projeto Front-end Online Store</p>
+
+## Contexto
+
+Esse é um projeto realizado em grupo para trabalhar além de hard skills também as soft skills. Ele é uma versão simples de uma loja online que utiliza a API do Mercado Livre, onde suas funcionalisdes foram desenvolvidas com base no que foi definido em nosso _Kanban_ simulando o mais próximo do mercado de trabalho. Algumas funcionalisades são poder buscar produtos por termos e categorias, adicionar e remover do carrinho de compras diferentes quantidades de produtos, ver os detalhes e finalizar a compra.
+
+## Competências desenvolvidas
+
+- Compreender `Métodos Ágeis`.
+- Compreeder o que é `Kanban`.
+- Compreeder o que é `Scrum`.
+- Capacidade de trabalhar em equipe de maneira eficaz.
