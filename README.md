@@ -12,19 +12,19 @@ Esse é um projeto realizado em grupo visando trabalhar além de `hard skills` t
 
 Clone o repositório:
 
-```JSON
+```SHELL
 git clone git@github.com:mairess/project-frontend-online-store-ts.git
 ```
 
 Instale as dependências:
 
-```JSON
+```SHELL
 npm install
 ```
 
 Inicie o vite server:
 
-```JSON
+```SHELL
 npm run dev
 ```
 
@@ -38,13 +38,13 @@ npm run dev
 
 Clone o repositório:
 
-```JSON
+```SHELL
 git clone git@github.com:mairess/project-frontend-online-store-ts.git
 ```
 
 Suba o container:
 
-```JSON
+```SHELL
 docker compose up -d
 ```
 
